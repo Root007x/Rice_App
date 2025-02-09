@@ -6,7 +6,7 @@ import numpy as np
 # Load the trained model
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model("models\model_dataset_1.keras")
+    model = tf.keras.models.load_model("models/model_dataset_1.keras")
     # model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
     #           optimizer=tf.keras.optimizers.Adam(learning_rate = 0.00002, weight_decay=0.001),
     #           metrics = ['accuracy'])
