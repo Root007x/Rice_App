@@ -7,13 +7,6 @@ import os
 
 st.set_page_config(menu_items={})
 
-# MODEL_PATHS = {
-#     "model_1": "models/model_dataset_1.keras",
-#     "model_2": "models/model_dataset_2.keras",
-#     "model_3": "models/model_dataset_3.keras",
-#     "model_4": "models/model_dataset_4.keras",
-# }
-
 MODEL_PATHS = {
     "model_1": os.path.join("models","model_dataset_1.keras"),
     "model_2": os.path.join("models","model_dataset_2.keras"),
@@ -31,7 +24,7 @@ def sidebar_setup():
     selected_model = None
 
     with st.sidebar:
-        st.markdown("# 🌾🌾Deep Rice")
+        st.markdown("# CNN-Powered Insights into Rice Varieties and Disease Detection.")
         st.success("Welcome")
         st.markdown("#### This web application accurately classifies rice varieties and detects leaf diseases. Simply select a dataset and upload an image for analysis.")
 
@@ -66,6 +59,7 @@ def sidebar_setup():
             </style>
             """, unsafe_allow_html=True)
         
+        
         if st.button("Submit",type="primary"):
             if model == "Rice Varieties (Model_1)":
                 selected_model = 1
@@ -83,6 +77,15 @@ def sidebar_setup():
 
             st.session_state["option"] = None
             st.rerun()
+
+        st.subheader("Download Sample Images To Test")
+        with open(os.path.join("downloadable_file","sample_images.zip"),"rb") as file:
+            st.download_button(
+                label="Download Sample Images",
+                data=file,
+                file_name = "sample_images.zip",
+                mime="application/zip"
+            )
 
         return selected_model
     
@@ -136,11 +139,6 @@ def choose_method(class_names, model):
 
 
 def classify_image(img,class_names, model):
-
-    # if uploaded_img is not None:
-    #     img = Image.open(uploaded_img)
-    #     img = img.resize((224,224))
-    #     st.image(img, caption = "Uploaded Image")
         
         col1, col2 = st.columns(2)
 
@@ -155,31 +153,6 @@ def classify_image(img,class_names, model):
                         else:
                             confidance = confidance * 100
                             result_placeholder.success(f"###### Predicted Class: {class_names[class_id]} \n ###### Confidence Level: {confidance:.2f}%")
-
-
-    
-# def upload_image(class_names, model):
-#     # uploaded_img = st.file_uploader("Choose an image to classify", type=["jpg","png","jpeg"], accept_multiple_files=False)
-#     uploaded_img = choose_method()
-
-#     if uploaded_img is not None:
-#         img = Image.open(uploaded_img)
-#         img = img.resize((224,224))
-#         st.image(img, caption = "Uploaded Image")
-        
-#         col1, col2 = st.columns(2)
-
-#         with col1:
-#             if st.button("Classify", type="secondary"):
-#                 with col2:
-#                     result_placeholder = st.empty()  
-#                     with st.spinner("Classifying..."): 
-#                         class_id, confidance = predict_class(img, model)
-#                         if confidance < 0.5:
-#                             result_placeholder.warning("###### Warning: The confidence level is below 50%. Consider using a clearer image for better accuracy or the image may not belong to our model classes.")
-#                         else:
-#                             confidance = confidance * 100
-#                             result_placeholder.success(f"###### Predicted Class: {class_names[class_id]} \n ###### Confidence Level: {confidance:.2f}%")
 
 
 # Model 1
@@ -216,28 +189,27 @@ def model_1():
         st.image(img, use_container_width=True)
 
     # Real job
-    class_names = ['10_Lal_Aush',
-                    '11_Jirashail',
-                    '12_Gutisharna',
-                    '13_Red_Cargo',
-                    '14_Najirshail',
-                    '15_Katari_Polao',
-                    '16_Lal_Biroi',
-                    '17_Chinigura_Polao',
-                    '18_Amon',
-                    '19_Shorna5',
-                    '1_Subol_Lota',
-                    '20_Lal_Binni',
-                    '2_Bashmoti',
-                    '3_Ganjiya',
-                    '4_Shampakatari',
-                    '5_Katarivog',
-                    '6_BR28',
-                    '7_BR29',
-                    '8_Paijam',
-                    '9_Bashful']
+    class_names = ['Lal Aush',
+                    'Jirashail',
+                    'Gutisharna',
+                    'Red_Cargo',
+                    'Najirshail',
+                    'Katari Polao',
+                    'Lal Biroi',
+                    'Chinigura Polao',
+                    'Amon',
+                    'Shorna5',
+                    'Subol Lota',
+                    'Lal Binni',
+                    'Bashmoti',
+                    'Ganjiya',
+                    'Shampakatari',
+                    'Katarivog',
+                    'BR28',
+                    'BR29',
+                    'Paijam',
+                    'Bashful']
     
-    # upload_image(class_names, model)
     choose_method(class_names, model)
 
 
@@ -276,11 +248,50 @@ def model_2():
     # Real job
     class_names = ['Arborio', 'Basmati', 'Ipsala', 'Jasmine', 'Karacadag']
     
-    # upload_image(class_names, model)
     choose_method(class_names, model)
 
 def model_3():
-    pass
+    model_location = MODEL_PATHS.get("model_3") # u can change
+    if model_location is None:
+        st.error("Invalid Model Selected. Please Try Again")
+        return
+
+    model = load_model(model_location)
+    if model is None:
+        st.warning("Model Load Failed")
+        return
+
+    st.title("Welcome to the Rice Leaf Disease Classifier for Dataset 3")
+    st.markdown("The dataset includes eight distinct rice leaf diseases: Bacterial Leaf Blight, Brown Spot, Healthy Rice Leaf, Leaf Blast, Leaf Scald, Narrow Brown Leaf Spot, Rice Hispa, and Sheath Blight. You can classify any rice leaf disease by uploading an image.")
+
+    with st.expander("Check Trained Model Performance"):
+        train_accuracy = "99.83%"
+        test_accuracy = "96.39%"
+
+        st.write(f"Train Accuracy : {train_accuracy}")
+        st.write(f"Test Accuracy : {test_accuracy}")
+
+        st.write("Loss Curve: ")
+        loss_img_loc = os.path.join("images","curve_3.png")
+        img = Image.open(loss_img_loc)
+        st.image(img, use_container_width=True)
+
+        st.write("Confusion Matrix : ")
+        conf_img_loc = os.path.join("images","confusion_matrix_3.png")
+        img = Image.open(conf_img_loc)
+        st.image(img, use_container_width=True)
+
+        class_names = ['Bacterial Leaf Blight',
+                        'Brown Spot',
+                        'Healthy Rice Leaf',
+                        'Leaf Blast',
+                        'Leaf scald',
+                        'Narrow Brown Leaf Spot',
+                        'Rice Hispa',
+                        'Sheath Blight']
+        
+    choose_method(class_names, model)
+
 
 def model_4():
     model_location = MODEL_PATHS.get("model_4") # u can change
@@ -324,7 +335,6 @@ def model_4():
                     'Rice Hispa',
                     'Sheath Blight']
     
-    # upload_image(class_names, model)
     choose_method(class_names, model)
 
 
@@ -353,7 +363,5 @@ if __name__ == "__main__":
                 model_3()
             elif model == 4:
                 model_4()
-            else:
-                pass
 
     
