@@ -5,17 +5,24 @@ import numpy as np
 import os
 
 
+# MODEL_PATHS = {
+#     "model_1": "models/model_dataset_1.keras",
+#     "model_2": "models/model_dataset_2.keras",
+#     "model_3": "models/model_dataset_3.keras",
+#     "model_4": "models/model_dataset_4.keras",
+# }
+
 MODEL_PATHS = {
-    "model_1": "models/model_dataset_1.keras",
-    "model_2": "models/model_dataset_2.keras",
-    "model_3": "models/model_dataset_3.keras",
-    "model_4": "models/model_dataset_4.keras",
+    "model_1": os.path.join("models","model_dataset_1.keras"),
+    "model_2": os.path.join("models","model_dataset_2.keras"),
+    "model_3": os.path.join("models","model_dataset_3.keras"),
+    "model_4": os.path.join("models","model_dataset_4.keras"),
 }
 
 def title():
     st.title("🔥Welcome to the Deep Learning-Based Web Application🔥")
     st.markdown("Deep learning is a subset of machine learning that uses artificial neural networks to process and analyze complex data. It enables computers to learn patterns and make decisions with minimal human intervention.")
-    st.image("images/title_image.png",use_container_width=True)
+    st.image(os.path.join("images","title_image.png"),use_container_width=True)
 
 # Sidebar
 def sidebar_setup():
@@ -194,12 +201,12 @@ def model_1():
         st.write(f"Test Accuracy : {test_accuracy}")
 
         st.write("Loss Curve: ")
-        loss_img_loc = "images/curve_1.png"
+        loss_img_loc = os.path.join("images","curve_1.png")
         img = Image.open(loss_img_loc)
         st.image(img, use_container_width=True)
 
         st.write("Confusion Matrix : ")
-        conf_img_loc = "images\confusion_matrix_1.png"
+        conf_img_loc = os.path.join("images","confusion_matrix_1.png")
         img = Image.open(conf_img_loc)
         st.image(img, use_container_width=True)
 
@@ -252,12 +259,12 @@ def model_2():
         st.write(f"Test Accuracy : {test_accuracy}")
 
         st.write("Loss Curve: ")
-        loss_img_loc = "images/curve_2.png"
+        loss_img_loc = os.path.join("images","curve_2.png")
         img = Image.open(loss_img_loc)
         st.image(img, use_container_width=True)
 
         st.write("Confusion Matrix : ")
-        conf_img_loc = "images\confusion_matrix_2.png"
+        conf_img_loc = os.path.join("images","confusion_matrix_2.png")
         img = Image.open(conf_img_loc)
         st.image(img, use_container_width=True)
 
@@ -292,12 +299,12 @@ def model_4():
         st.write(f"Test Accuracy : {test_accuracy}")
 
         st.write("Loss Curve: ")
-        loss_img_loc = "images/curve_4.png"
+        loss_img_loc = os.path.join("images","curve_4.png")
         img = Image.open(loss_img_loc)
         st.image(img, use_container_width=True)
 
         st.write("Confusion Matrix : ")
-        conf_img_loc = "images\confusion_matrix_4.png"
+        conf_img_loc = os.path.join("images","confusion_matrix_4.png")
         img = Image.open(conf_img_loc)
         st.image(img, use_container_width=True)
 
