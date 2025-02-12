@@ -5,6 +5,8 @@ import numpy as np
 import os
 
 
+st.set_page_config(menu_items={})
+
 # MODEL_PATHS = {
 #     "model_1": "models/model_dataset_1.keras",
 #     "model_2": "models/model_dataset_2.keras",
