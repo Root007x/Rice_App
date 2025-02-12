@@ -81,6 +81,9 @@ def sidebar_setup():
             st.session_state["submitted"] = True
             st.session_state["selected_model"] = selected_model
 
+            st.session_state["option"] = None
+            st.rerun()
+
         return selected_model
     
 @st.cache_resource
@@ -105,7 +108,7 @@ def predict_class(image, model):
 
 def choose_method(class_names, model):
     st.markdown("#### Choose an Option")
-    option = st.radio("Select an option", ("Use Camera", "Upload an image"))
+    option = st.radio("Select an option", ("Use Camera", "Upload an image"), index=1)
 
     if st.button("Select"):
         st.session_state["option"] = option
