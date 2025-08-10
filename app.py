@@ -24,7 +24,7 @@ def sidebar_setup():
     selected_model = None
 
     with st.sidebar:
-        st.markdown("# CNN-Powered Insights into Rice Varieties and Disease Detection.")
+        st.markdown("# CNN-Powered Insights into Rice Varieties and Disease Classification.")
         st.success("Welcome")
         st.markdown("#### This web application accurately classifies rice varieties and detects leaf diseases. Simply select a dataset and upload an image for analysis.")
 
